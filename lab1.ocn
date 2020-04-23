@@ -1,0 +1,56 @@
+
+simulator "spectre"
+
+; Give proper path to your extracted netlist
+design( "/u/nnikolov/simulation/1BitAdder_FO4/spectre/schematic/netlist/netlist")
+
+; Edit Path to Model file--------------------------+
+modelFile("~/Documents/ECE426/models/50nmodels.m")
+analysis('tran ?stop "10n")
+
+
+; Select Transient Result---------------------------+
+selectResult( 'tran )
+
+; Cin ----------------------------------------------+
+tfCin = delay( VT("/Cin") 0.960 1 "falling" VT("/Cin") 0.240 1 "falling" ?td2 0 0 0 )*1e9
+trCin = delay( VT("/Cin") 0.240 1 "rising" VT("/Cin") 0.960 1 "rising" ?td2 0 0 0 )*1e9
+printf("Cin Fall Time is == %f3 \n Cin Rise Time is == %f3  \n",tfCin,trCin)
+
+; Sum  ----------------------------------------------+
+tfSum = delay( VT("/Sum") 0.960 1 "falling" VT("/Sum") 0.240 1 "falling" ?td2 0 0 0 )*1e9
+trSum = delay( VT("/Sum") 0.240 1 "rising" VT("/Sum") 0.960 1 "rising" ?td2 0 0 0 )*1e9
+printf(" Sum Fall Time is == %f3 \n Sum Rise Time is == %f3  \n",tfSum,trSum)
+
+; P  ----------------------------------------------+
+tfP = delay( VT("/P") 0.960 1 "falling" VT("/P") 0.240 1 "falling" ?td2 0 0 0 )*1e9
+trP = delay( VT("/P") 0.240 1 "rising" VT("/P") 0.960 1 "rising" ?td2 0 0 0 )*1e9
+printf(" P Fall Time is == %f3 \n Cout Rise Time is == %f3  \n",tfP,trP)
+
+; G  ----------------------------------------------+
+tfG = delay( VT("/G") 0.960 1 "falling" VT("/G") 0.240 1 "falling" ?td2 0 0 0 )*1e9
+trG = delay( VT("/P") 0.240 1 "rising" VT("/G") 0.960 1 "rising" ?td2 0 0 0 )*1e9
+printf(" G Fall Time is == %f3 \n  Cout Rise Time is == %f3  \n",tfG,trG)
+
+; Cout  ----------------------------------------------+
+tfCout = delay( VT("/Cout") 0.960 1 "falling" VT("/Cout") 0.240 1 "falling" ?td2 0 0 0 )*1e9
+trCout = delay( VT("/Cout") 0.240 1 "rising" VT("/Cout") 0.960 1 "rising" ?td2 0 0 0 )*1e9
+printf(" Cout Fall Time is == %f3 \n Cout Rise Time is == %f3  \n",tfCout,trCout)
+
+tplhsum = delay(VT("/Cin") 50% 1 "falling" VT("/Sum") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" Tplh Time is == %f3 \n",tplhsum)
+
+tphlsum = delay(VT("/Sum") 50% 1 "falling" VT("/Cin") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" TphlSum Time is == %f3 \n",tphlsum)
+
+tplhG = delay(VT("/Cin") 50% 1 "falling" VT("/G") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" TplhG Time is == %f3 \n",tplhG)
+
+tphlG = delay(VT("/G") 50% 1 "falling" VT("/Cin") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" TphlG Time is == %f3 \n",tphlG)
+
+tplhP = delay(VT("/Cin") 50% 1 "falling" VT("/P") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" TplhP Time is == %f3 \n",tplhP)
+
+tphlP = delay(VT("/P") 50% 1 "falling" VT("/Cin") 50% 1 "rising" ?td2 0 0 0 )*1e9
+printf(" TphlP Time is == %f3 \n",tphlP)
