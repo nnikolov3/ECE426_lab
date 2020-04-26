@@ -1,3 +1,0 @@
-INCLUDE /pkgs/cadence/05-2013-rhel5/local/cdssetup/cds.lib
-DEFINE ECE426 /home/nnikolov/common/Documents/ECE426/FreePDK45/ncsu_basekit/ECE426
-DEFINE Lab1 /home/nnikolov/common/Documents/ECE426/FreePDK45/ncsu_basekit/Lab1
